@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
+use app\Models\File;
 
 class fileMangerService
 {
@@ -24,6 +25,21 @@ class fileMangerService
                 $file->getClientOriginalName(),
                 $storage->id,
                 $folderId,
+            );
+        });
+    }
+    public function copyFile(
+        int $fileId,
+        ?int $targetFolderId = null)
+    {
+        return DB::transaction(function () use ($fileId, $targetFolderId) {
+
+            $file = File::findOrFail($fileId);
+
+            return $this->fileService->createFileRecord(
+                $file->name . ' (copy)',
+                $file->storage_id, // SAME storage!
+                $targetFolderId
             );
         });
     }

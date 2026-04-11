@@ -8,6 +8,8 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('files',[fileController::class,'store']);
+Route::post('/files/{id}/copy', [FileController::class, 'copy']);
+
 // folder/{id}/file/{UUid}
 
 
