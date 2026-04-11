@@ -1,0 +1,24 @@
+info:
+  name: Upload
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: 127.0.0.1:8000/api/files
+  body:
+    type: multipart-form
+    data:
+      - name: file
+        type: file
+        value: []
+      - name: folder_id
+        type: text
+        value: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

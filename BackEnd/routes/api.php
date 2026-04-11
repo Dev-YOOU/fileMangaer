@@ -7,7 +7,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('file/{id}', [fileController::class,"show"]);
+Route::post('files',[fileController::class,'store']);
 // folder/{id}/file/{UUid}
 
 
