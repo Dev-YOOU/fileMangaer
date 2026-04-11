@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->string('original_name');
+            $table->string('name');
             $table->foreignId('folder_id')
                     ->nullable()
                     ->constrained()
@@ -21,8 +21,6 @@ return new class extends Migration
             $table->foreignId('storage_id')
                     ->constrained('file_storages')
                     ->cascadeOnDelete();
-            $table->foreignId('user_id')
-                    ->constrained();
             $table->timestamps();
         });
     }
