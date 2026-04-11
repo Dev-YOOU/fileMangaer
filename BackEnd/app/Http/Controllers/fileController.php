@@ -2,41 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\file;
+use App\Services\fileMangerService;
 use Illuminate\Http\Request;
 
-class fileController extends Controller
+class FileController extends Controller
 {
-    public function upload(Request $request){
-        // recive file and it's properties and the user upaloded it and the folder it's included 
-        file::create();
-        return response()->json([
-            'message'=>"couldn't upload file",
+    public function __construct(protected fileMangerService $fm) {}
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file',
+            'folder_id' => 'nullable|exists:folders,id'
         ]);
-    }
-    public function download(Request $request){
-        return response()->json([
-            "message"=>"couldn't download file"
-        ]);
-    }
-    public function show(Request $request){
-        return response()->json([
-            "message"=>"couldn't download file"
-        ]);
-    }
-    public function destroy(Request $request){
-        return response()->json([
-            "message"=>"couldn't download file"
-        ]); 
-    }
-    public function move(Request $request){
-        return response()->json([
-            "message"=>"couldn't download file"
-        ]);
-    }
-    public function copy(Request $request){
-        return response()->json([
-            "message"=>"couldn't download file"
-        ]);
+
+        return $this->fm->uploadFile(
+            $request->file('file'),
+            $request->folder_id,
+        );
     }
 }
