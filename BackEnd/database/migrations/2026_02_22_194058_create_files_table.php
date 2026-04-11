@@ -14,11 +14,15 @@ return new class extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->string('original_name');
-            $table->string('path');
-            $table->unsignedBigInteger('size');
-            $table->string('mime_type');
-            $table->unsignedBigInteger('folder_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('folder_id')
+                    ->nullable()
+                    ->constrained()
+                    ->cascadeOnDelete();
+            $table->foreignId('storage_id')
+                    ->constrained('file_storages')
+                    ->cascadeOnDelete();
+            $table->foreignId('user_id')
+                    ->constrained();
             $table->timestamps();
         });
     }
