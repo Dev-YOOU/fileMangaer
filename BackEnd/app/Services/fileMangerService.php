@@ -55,4 +55,11 @@ class fileMangerService
 
     return $file;
     }
+
+        public function deleteFile(int $fileId)
+    {
+        $file = File::findOrFail($fileId);
+
+        $this->fileService->deleteFile($file);
+    }
 }

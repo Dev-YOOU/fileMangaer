@@ -10,6 +10,7 @@ Route::get('/user', function (Request $request) {
 Route::post('files',[fileController::class,'store']);
 Route::post('/files/{id}/copy', [FileController::class, 'copy']);
 Route::post('/files/{id}/move', [FileController::class, 'move']);
+Route::delete('/files/{id}', [FileController::class, 'destroy']);
 
 
 // folder/{id}/file/{UUid}

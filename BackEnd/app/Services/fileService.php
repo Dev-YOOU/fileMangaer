@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\File;
 use App\Models\FileStorage;
+use Illuminate\Support\Facades\Storage;
 
 class fileService
 {
@@ -26,5 +27,18 @@ class fileService
             'storage_id' => $storageId,
             'folder_id' => $folderId,
         ]);
+    }
+
+    public function deleteFile(File $file)
+    {
+        $storage = $file->storage;
+
+        $file->delete();
+
+        // reference counting
+        if ($storage->files()->count() === 0) {
+            Storage::delete($storage->path);
+            $storage->delete();
+        }
     }
 }

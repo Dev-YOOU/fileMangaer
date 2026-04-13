@@ -30,5 +30,11 @@ class FileController extends Controller
     {
         return $this->fm->moveFile($id, $request->target_folder_id);
     }
+     public function destroy($id)
+    {
+        $this->fm->deleteFile($id);
+
+        return response()->json(['message' => 'deleted']);
+    }
 
 }
