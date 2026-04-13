@@ -43,4 +43,16 @@ class fileMangerService
             );
         });
     }
+    public function moveFile(
+        int $fileId, 
+        ?int $targetFolderId=null)
+    {
+    $file = File::findOrFail($fileId);
+
+    $file->update([
+        'folder_id' => $targetFolderId
+    ]);
+
+    return $file;
+    }
 }

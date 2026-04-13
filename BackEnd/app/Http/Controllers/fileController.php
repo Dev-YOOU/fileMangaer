@@ -26,5 +26,9 @@ class FileController extends Controller
     {
         return $this->fm->copyFile($id, $request->target_folder_id);
     }
+     public function move($id, Request $request)
+    {
+        return $this->fm->moveFile($id, $request->target_folder_id);
+    }
 
 }
