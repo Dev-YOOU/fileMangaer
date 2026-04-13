@@ -30,6 +30,9 @@ class FileController extends Controller
     {
         return $this->fm->moveFile($id, $request->target_folder_id);
     }
+    public function rename($id, Request $request){
+        return $this->fm->renameFile($id,$request->new_name);
+    }
      public function destroy($id)
     {
         $this->fm->deleteFile($id);

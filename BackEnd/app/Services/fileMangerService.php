@@ -55,6 +55,17 @@ class fileMangerService
 
     return $file;
     }
+    public function renameFile(
+        int $fileId, 
+        ?string $new_name
+    ) {
+        $file = File::findOrFail($fileId);
+
+        $file->update([
+        'name' => $new_name
+    ]);
+    return $file;
+    }
 
         public function deleteFile(int $fileId)
     {
