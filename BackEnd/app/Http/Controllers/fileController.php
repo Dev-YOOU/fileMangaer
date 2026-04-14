@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\fileMangerService;
 use Illuminate\Http\Request;
 
-class FileController extends Controller
+class fileController extends Controller
 {
     public function __construct(protected fileMangerService $fm) {}
 

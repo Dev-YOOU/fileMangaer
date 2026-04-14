@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
-use app\Models\File;
+use App\Models\File;
 
 class fileMangerService
 {
