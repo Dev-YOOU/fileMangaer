@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\fileMangerService;
 use Illuminate\Http\Request;
 
-class FileController extends Controller
+class fileController extends Controller
 {
     public function __construct(protected fileMangerService $fm) {}
 
@@ -21,4 +21,26 @@ class FileController extends Controller
             $request->folder_id,
         );
     }
+
+    public function copy($id, Request $request)
+    {
+        return $this->fm->copyFile($id, $request->target_folder_id);
+    }
+     public function move($id, Request $request)
+    {
+        return $this->fm->moveFile($id, $request->target_folder_id);
+    }
+    public function rename($id, Request $request){
+        return $this->fm->renameFile($id,$request->new_name);
+    }
+     public function destroy($id)
+    {
+        $this->fm->deleteFile($id);
+
+        return response()->json(['message' => 'deleted']);
+    }
+    public function download($id){
+        return $this->fm->downloadFile($id);
+    }
+
 }

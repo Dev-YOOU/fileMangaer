@@ -8,6 +8,13 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('files',[fileController::class,'store']);
+Route::post('/files/{id}/copy', [fileController::class, 'copy']);
+Route::post('/files/{id}/move', [fileController::class, 'move']);
+Route::post('/files/{id}/rename', [fileController::class, 'rename']);
+Route::delete('/files/{id}', [fileController::class, 'destroy']);
+Route::get('/files/{id}/download', [fileController::class, 'download']);
+
+
 // folder/{id}/file/{UUid}
 
 
