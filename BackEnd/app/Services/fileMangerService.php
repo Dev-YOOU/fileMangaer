@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\File;
+use Illuminate\Support\Facades\Storage;
 
 class fileMangerService
 {
@@ -72,5 +73,15 @@ class fileMangerService
         $file = File::findOrFail($fileId);
 
         $this->fileService->deleteFile($file);
+    }
+      public function downloadFile(int $fileId){
+        $file = File::with('storage')->findOrFail($fileId);
+        $path = $file->storage->path;
+        
+        if (!Storage::exists($path)) {
+        abort(404, 'File not found on disk');
+    }
+
+    return Storage::download($path, $file->name);
     }
 }

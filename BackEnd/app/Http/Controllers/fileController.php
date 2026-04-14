@@ -39,5 +39,8 @@ class fileController extends Controller
 
         return response()->json(['message' => 'deleted']);
     }
+    public function download($id){
+        return $this->fm->downloadFile($id);
+    }
 
 }
