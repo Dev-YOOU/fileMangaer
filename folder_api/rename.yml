@@ -5,7 +5,16 @@ info:
 
 http:
   method: POST
-  url: 127.0.0.1:8000/api/files/{id}/rename
+  url: 127.0.0.1:8000/api/files/:id/rename?new_name
+  params:
+    - name: new_name
+      value: ""
+      type: query
+    - name: id
+      value: ""
+      type: path
+  body:
+    type: form-urlencoded
   auth: inherit
 
 settings:

@@ -6,12 +6,16 @@ info:
 http:
   method: POST
   url: 127.0.0.1:8000/api/files
+  params:
+    - name: ""
+      value: ""
+      type: query
   body:
     type: multipart-form
     data:
       - name: file
-        type: file
-        value: []
+        type: text
+        value: ""
       - name: folder_id
         type: text
         value: ""

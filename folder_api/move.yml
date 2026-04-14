@@ -5,7 +5,14 @@ info:
 
 http:
   method: POST
-  url: 127.0.0.1:8000/api/files/{id}/move
+  url: 127.0.0.1:8000/api/files/:id/move?target_folder_id
+  params:
+    - name: target_folder_id
+      value: ""
+      type: query
+    - name: id
+      value: ""
+      type: path
   auth: inherit
 
 settings:

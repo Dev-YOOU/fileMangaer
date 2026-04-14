@@ -5,7 +5,11 @@ info:
 
 http:
   method: DELETE
-  url: 127.0.0.1:8000/api/files/{id}
+  url: 127.0.0.1:8000/api/files/:id/delete
+  params:
+    - name: id
+      value: ""
+      type: path
   auth: inherit
 
 settings:
