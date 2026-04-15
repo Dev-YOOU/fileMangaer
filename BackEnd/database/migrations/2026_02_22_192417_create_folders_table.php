@@ -18,8 +18,7 @@ return new class extends Migration
                     ->nullable()   
                     ->constrained('folders')
                     ->cascadeOnDelete();
-            $table->foreignId('user_id')
-                    ->constrained();
+
             $table->timestamps();
         });
     }

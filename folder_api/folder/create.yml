@@ -1,0 +1,22 @@
+info:
+  name: create
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: 127.0.0.1:8000/api/folders?name=a&parent_id
+  params:
+    - name: name
+      value: a
+      type: query
+    - name: parent_id
+      value: ""
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

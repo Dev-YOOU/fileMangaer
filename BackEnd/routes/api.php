@@ -2,6 +2,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\fileController;
+use App\Http\Controllers\folderController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -14,7 +15,7 @@ Route::post('/files/{id}/rename', [fileController::class, 'rename']);
 Route::delete('/files/{id}', [fileController::class, 'destroy']);
 Route::get('/files/{id}/download', [fileController::class, 'download']);
 
-
+Route::post('folders',[folderController::class,'store']);
 // folder/{id}/file/{UUid}
 
 
