@@ -16,6 +16,8 @@ Route::delete('/files/{id}', [fileController::class, 'destroy']);
 Route::get('/files/{id}/download', [fileController::class, 'download']);
 
 Route::post('folders',[folderController::class,'store']);
+Route::post('/folders/{id}/copy', [folderController::class, 'copy']);
+
 // folder/{id}/file/{UUid}
 
 

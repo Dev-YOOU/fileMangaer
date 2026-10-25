@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\File;
+use App\models\Folder;
 use Illuminate\Support\Facades\Storage;
 
 class fileMangerService
@@ -84,4 +85,73 @@ class fileMangerService
 
     return Storage::download($path, $file->name);
     }
+    public function copyFolder(int $folderId, ?int $targetParentId = null)
+{
+    return DB::transaction(function () use ($folderId, $targetParentId) {
+
+        $folder = Folder::with([
+            'files',
+            'children.files',
+            'children.children' // eager load deeper if needed
+        ])->findOrFail($folderId);
+
+        if ($targetParentId && $this->isDescendant($folderId, $targetParentId)) {
+            throw new \Exception('Cannot copy folder into itself');
+        }
+
+        return $this->recursiveCopyFolder($folder, $targetParentId);
+    });
+}
+private function recursiveCopyFolder(Folder $folder, ?int $parentId)
+{
+    //  Create new folder
+    $newFolder = $this->folderService->createFolder(
+        $this->generateCopyName($folder->name, $parentId),
+        $parentId
+    );
+
+    //  Copy files (metadata only)
+    foreach ($folder->files as $file) {
+        $this->fileService->createFileRecord(
+            $file->name,
+            $file->storage_id, // 🔥 SAME storage
+            $newFolder->id
+        );
+    }
+
+    //  Copy child folders recursively
+    foreach ($folder->children as $child) {
+        $this->recursiveCopyFolder($child, $newFolder->id);
+    }
+
+    return $newFolder;
+}
+private function isDescendant(int $folderId, int $targetId): bool
+{
+    while ($targetId) {
+        if ($targetId == $folderId) return true;
+
+        $target = Folder::find($targetId);
+        $targetId = $target?->parent_id;
+    }
+
+    return false;
+}
+private function generateCopyName(string $name, ?int $parentId): string
+{
+    $baseName = $name . ' (copy)';
+    $newName = $baseName;
+    $counter = 2;
+
+    while (
+        Folder::where('parent_id', $parentId)
+            ->where('name', $newName)
+            ->exists()
+    ) {
+        $newName = $name . " (copy {$counter})";
+        $counter++;
+    }
+
+    return $newName;
+}
 }

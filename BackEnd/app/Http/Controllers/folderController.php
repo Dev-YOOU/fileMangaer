@@ -17,4 +17,18 @@ class folderController extends Controller
         );
         return "accepted";
     }
+
+    public function copy($id,Request $request)
+{
+    $request->validate([
+        'target_parent_id' => 'nullable|exists:folders,id'
+    ]);
+
+    $folder = $this->fs->copyFolder(
+        $id,
+        $request->target_parent_id
+    );
+
+    return response()->json($folder, 201);
+}
 }
